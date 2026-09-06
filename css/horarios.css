@@ -1,0 +1,277 @@
+@font-face {
+    font-family: 'Horizon';
+    src: url('../fonts/horizon.otf') format('opentype');
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border-radius: 0;
+}
+
+body {
+    background-color: #0D0D0D;
+    color: #F5F5F0;
+    font-family: 'Century Gothic', 'Questrial', sans-serif;
+}
+
+.cabecera {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 5%;
+    background-color: #1C1C1C;
+    border-bottom: 3px solid #C9A227;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-family: 'Horizon', 'Anton', sans-serif;
+    font-size: 26px;
+    color: #F5F5F0;
+    text-decoration: none;
+    letter-spacing: 2px;
+}
+
+.logo img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border: 3px solid #C9A227;
+    margin-right: 18px;
+}
+
+.menu {
+    display: flex;
+}
+
+.menu a {
+    color: #F5F5F0;
+    text-decoration: none;
+    font-size: 18px;
+    margin-left: 30px;
+    padding-bottom: 5px;
+    border-bottom: 3px solid #1C1C1C;
+}
+
+.menu a:hover {
+    color: #C9A227;
+}
+
+.menu .activo {
+    color: #C9A227;
+    border-bottom: 3px solid #C9A227;
+}
+
+.titulo {
+    padding: 80px 5% 30px 5%;
+    text-align: center;
+}
+
+h1 {
+    font-family: 'Horizon', 'Anton', sans-serif;
+    font-size: 60px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: #F5F5F0;
+}
+
+h2 {
+    font-family: 'Anton', sans-serif;
+    font-size: 38px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #C9A227;
+    margin-bottom: 40px;
+}
+
+.atencion {
+    padding: 50px 5%;
+}
+
+.tarjetas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.tarjeta {
+    background-color: #1C1C1C;
+    border: 3px solid #A1A1A1;
+    box-shadow: 8px 8px 0px #C9A227;
+    padding: 30px 20px;
+    width: 23%;
+    margin-bottom: 30px;
+}
+
+.tarjeta h3 {
+    font-family: 'Anton', sans-serif;
+    font-size: 20px;
+    letter-spacing: 2px;
+    color: #F5F5F0;
+    margin-bottom: 15px;
+}
+
+.tarjeta p {
+    color: #8C8C8C;
+    font-size: 17px;
+}
+
+.clases {
+    padding: 50px 5%;
+}
+
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+    border: 3px solid #F5F5F0;
+    box-shadow: 8px 8px 0px #C9A227;
+}
+
+.tabla th {
+    background-color: #C9A227;
+    color: #0D0D0D;
+    font-family: 'Anton', sans-serif;
+    font-size: 20px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border: 3px solid #F5F5F0;
+    padding: 18px;
+    text-align: left;
+}
+
+.tabla td {
+    border: 3px solid #F5F5F0;
+    padding: 18px;
+    font-size: 17px;
+    color: #F5F5F0;
+}
+
+.fila-clara {
+    background-color: #1C1C1C;
+}
+
+.fila-oscura {
+    background-color: #0D0D0D;
+}
+
+.reglas {
+    padding: 50px 5% 70px 5%;
+}
+
+.bloque {
+    background-color: #1C1C1C;
+    border: 3px solid #C9A227;
+    box-shadow: 8px 8px 0px #F5F5F0;
+    padding: 35px;
+    max-width: 800px;
+}
+
+.lista {
+    list-style: none;
+}
+
+.lista li {
+    color: #F5F5F0;
+    font-size: 19px;
+    padding: 14px 0px;
+    border-bottom: 3px solid #0D0D0D;
+}
+
+.pie {
+    display: flex;
+    justify-content: space-between;
+    background-color: #1C1C1C;
+    border-top: 3px solid #C9A227;
+    padding: 50px 5%;
+}
+
+.pie-bloque {
+    width: 30%;
+}
+
+.pie-bloque h3 {
+    font-family: 'Anton', sans-serif;
+    font-size: 22px;
+    letter-spacing: 2px;
+    color: #C9A227;
+    margin-bottom: 15px;
+}
+
+.pie-bloque p {
+    color: #8C8C8C;
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+@media (max-width: 768px) {
+
+    .cabecera {
+        flex-direction: column;
+    }
+
+    .logo img {
+        width: 45px;
+        height: 45px;
+        margin-right: 12px;
+    }
+
+    .menu {
+        flex-direction: column;
+        margin-top: 20px;
+        width: 100%;
+    }
+
+    .menu a {
+        margin-left: 0;
+        margin-top: 15px;
+    }
+
+    h1 {
+        font-size: 34px;
+        letter-spacing: 2px;
+    }
+
+    h2 {
+        font-size: 26px;
+    }
+
+    .tarjetas {
+        flex-direction: column;
+    }
+
+    .tarjeta {
+        width: 100%;
+    }
+
+    .tabla th {
+        font-size: 15px;
+        padding: 10px;
+    }
+
+    .tabla td {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .bloque {
+        width: 100%;
+        padding: 22px;
+    }
+
+    .lista li {
+        font-size: 16px;
+    }
+
+    .pie {
+        flex-direction: column;
+    }
+
+    .pie-bloque {
+        width: 100%;
+        margin-bottom: 30px;
+    }
+
+}
