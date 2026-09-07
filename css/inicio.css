@@ -99,7 +99,7 @@ h1 {
 }
 
 .boton:hover {
-    transform: translate(4px, 4px);
+    transform: translate(4px, 4px); 
     box-shadow: 2px 2px 0px #F5F5F0;
 }
 
@@ -240,17 +240,13 @@ h2 {
         margin-right: 12px;
     }
 
-    .marca {
-        flex-direction: column;
+    .bloque-logo {
+        width: 100%;
+        padding: 25px;
     }
 
-    .marca-texto {
-        width: 100%;
-    }
-
-    .marca-logo {
-        width: 100%;
-        margin-top: 35px;
+    .logo-grande {
+        max-width: 100%;
     }
 
     .menu {
