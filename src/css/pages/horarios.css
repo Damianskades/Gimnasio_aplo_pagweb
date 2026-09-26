@@ -1,0 +1,104 @@
+.atencion {
+    padding: 50px 5%;
+}
+
+.tarjeta {
+    padding: 30px 20px;
+    width: 23%;
+    margin-bottom: 30px;
+}
+
+.tarjeta h3 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.tarjeta p {
+    font-size: 17px;
+}
+
+.clases {
+    padding: 50px 5%;
+}
+
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+    border: 3px solid var(--hueso);
+    box-shadow: 8px 8px 0px var(--dorado);
+}
+
+.tabla th {
+    background-color: var(--dorado);
+    color: var(--negro);
+    font-family: var(--fuente-destacada);
+    font-size: 20px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border: 3px solid var(--hueso);
+    padding: 18px;
+    text-align: left;
+}
+
+.tabla td {
+    border: 3px solid var(--hueso);
+    padding: 18px;
+    font-size: 17px;
+    color: var(--hueso);
+}
+
+.fila-clara {
+    background-color: var(--negro-suave);
+}
+
+.fila-oscura {
+    background-color: var(--negro);
+}
+
+.reglas {
+    padding: 50px 5% 70px 5%;
+}
+
+.bloque {
+    border: 3px solid var(--dorado);
+    box-shadow: 8px 8px 0px var(--hueso);
+    padding: 35px;
+    max-width: 800px;
+}
+
+.lista {
+    list-style: none;
+}
+
+.lista li {
+    color: var(--hueso);
+    font-size: 19px;
+    padding: 14px 0px;
+    border-bottom: 3px solid var(--negro);
+}
+
+@media (max-width: 768px) {
+
+    .tarjeta {
+        width: 100%;
+    }
+
+    .tabla th {
+        font-size: 15px;
+        padding: 10px;
+    }
+
+    .tabla td {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .bloque {
+        padding: 22px;
+    }
+
+    .lista li {
+        font-size: 16px;
+    }
+
+}

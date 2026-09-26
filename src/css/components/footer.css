@@ -1,0 +1,38 @@
+.pie {
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--negro-suave);
+    border-top: 3px solid var(--dorado);
+    padding: 50px 5%;
+}
+
+.pie-bloque {
+    width: 30%;
+}
+
+.pie-bloque h3 {
+    font-family: var(--fuente-destacada);
+    font-size: 22px;
+    letter-spacing: 2px;
+    color: var(--dorado);
+    margin-bottom: 15px;
+}
+
+.pie-bloque p {
+    color: var(--gris);
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+@media (max-width: 768px) {
+
+    .pie {
+        flex-direction: column;
+    }
+
+    .pie-bloque {
+        width: 100%;
+        margin-bottom: 30px;
+    }
+
+}

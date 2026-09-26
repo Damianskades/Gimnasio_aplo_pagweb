@@ -1,0 +1,29 @@
+.tarjetas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.tarjeta {
+    background-color: var(--negro-suave);
+    border: 3px solid var(--gris-claro);
+    box-shadow: 8px 8px 0px var(--dorado);
+}
+
+.tarjeta h3 {
+    font-family: var(--fuente-destacada);
+    letter-spacing: 2px;
+    color: var(--hueso);
+}
+
+.tarjeta p {
+    color: var(--gris);
+}
+
+@media (max-width: 768px) {
+
+    .tarjetas {
+        flex-direction: column;
+    }
+
+}

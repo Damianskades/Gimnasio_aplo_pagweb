@@ -1,0 +1,90 @@
+h2 {
+    font-size: 30px;
+    letter-spacing: 2px;
+    color: var(--hueso);
+    margin-bottom: 0;
+}
+
+.titulo {
+    padding: 80px 5% 40px 5%;
+}
+
+.planes {
+    padding: 40px 5% 70px 5%;
+}
+
+.tarjeta {
+    padding: 35px 25px;
+    width: 30%;
+    margin-bottom: 50px;
+}
+
+.destacada {
+    border: 6px solid var(--dorado);
+    box-shadow: 8px 8px 0px var(--hueso);
+}
+
+.tarjeta .etiqueta {
+    display: inline-block;
+    background-color: var(--dorado);
+    color: var(--negro);
+    font-family: var(--fuente-destacada);
+    letter-spacing: 2px;
+    font-size: 16px;
+    padding: 8px 18px;
+    margin-bottom: 18px;
+}
+
+.tarjeta .precio {
+    font-family: var(--fuente-destacada);
+    font-size: 52px;
+    color: var(--dorado);
+    margin-top: 15px;
+    margin-bottom: 25px;
+}
+
+.tarjeta .precio-anterior {
+    display: block;
+    font-family: var(--fuente-texto);
+    font-size: 20px;
+    color: var(--gris);
+    text-decoration: line-through;
+    margin-top: 8px;
+}
+
+.beneficios {
+    list-style: none;
+    margin-bottom: 35px;
+}
+
+.beneficios li {
+    color: var(--gris);
+    font-size: 17px;
+    padding: 10px 0px;
+    border-bottom: 3px solid var(--negro);
+}
+
+.boton {
+    padding: 15px 35px;
+    font-size: 18px;
+}
+
+@media (max-width: 768px) {
+
+    h1 {
+        font-size: 32px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    .tarjeta .precio {
+        font-size: 40px;
+    }
+
+    .tarjeta {
+        width: 100%;
+    }
+
+}
