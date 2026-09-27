@@ -7,13 +7,17 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    border-radius: 0;
 }
 
 body {
     background-color: var(--blanco);
     color: var(--negro);
-    font-family: 'Century Gothic', 'Questrial', sans-serif;
-    line-height: 1.5;
+    line-height: 1.6;
+}
+
+.columna {
+    padding: 0 30px 90px 30px;
 }
 
 .admin-cabecera {
@@ -21,51 +25,38 @@ body {
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    gap: 20px;
-    padding: 45px 6%;
-    border-bottom: 1px solid var(--negro);
+    gap: 16px;
+    padding: 50px 0 0 0;
 }
 
 .admin-cabecera h1 {
-    font-size: 28px;
+    font-size: 26px;
     font-weight: normal;
-    letter-spacing: 1px;
 }
 
 .enlace-sitio {
+    background-color: var(--blanco);
     color: var(--negro);
-    font-size: 15px;
+    border: 1px solid var(--negro);
+    font-size: 14px;
     text-decoration: none;
-    border-bottom: 1px solid var(--negro);
-    padding-bottom: 3px;
-}
-
-.enlace-sitio:hover {
-    border-bottom-color: transparent;
+    padding: 10px 20px;
 }
 
 .pestanas {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
-    padding: 40px 6% 0 6%;
+    gap: 8px;
+    padding: 34px 0 0 0;
 }
 
 .pestana {
     background-color: var(--blanco);
     color: var(--negro);
     border: 1px solid var(--negro);
-    border-radius: 999px;
-    padding: 11px 26px;
-    font-family: inherit;
-    font-size: 15px;
-    letter-spacing: 1px;
+    padding: 9px 22px;
+    font-size: 14px;
     cursor: pointer;
-}
-
-.pestana:hover {
-    background-color: var(--negro);
-    color: var(--blanco);
 }
 
 .pestana.activa {
@@ -76,28 +67,24 @@ body {
 .panel {
     display: flex;
     flex-direction: column;
-    gap: 35px;
-    padding: 35px 6% 80px 6%;
+    padding: 36px 0 0 0;
 }
 
-.recuadro {
-    border: 1px solid var(--negro);
-    border-radius: 14px;
-    padding: 38px;
+.recuadro + .recuadro {
+    margin-top: 44px;
 }
 
 .recuadro h2 {
-    font-size: 19px;
+    font-size: 15px;
     font-weight: normal;
-    letter-spacing: 2px;
     text-transform: uppercase;
-    margin-bottom: 32px;
+    margin-bottom: 24px;
 }
 
 .formulario {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 26px 32px;
+    gap: 22px 28px;
 }
 
 .formulario h2 {
@@ -108,7 +95,7 @@ body {
 .campo {
     display: flex;
     flex-direction: column;
-    gap: 9px;
+    gap: 7px;
 }
 
 .campo-ancho {
@@ -117,7 +104,6 @@ body {
 
 .campo label {
     font-size: 13px;
-    letter-spacing: 1px;
     text-transform: uppercase;
 }
 
@@ -127,87 +113,68 @@ body {
     background-color: var(--blanco);
     color: var(--negro);
     border: 1px solid var(--negro);
-    border-radius: 8px;
-    padding: 12px 14px;
-    font-family: inherit;
+    padding: 10px 12px;
     font-size: 15px;
 }
 
 .campo textarea {
-    resize: vertical;
+    resize: none;
+    overflow: hidden;
+    min-height: 92px;
 }
 
 .campo input:focus,
 .campo textarea:focus {
     outline: 2px solid var(--negro);
-    outline-offset: 2px;
+    outline-offset: 1px;
 }
 
 .campo-casilla {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 11px;
-}
-
-.grupo-casillas {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 14px 26px;
+    gap: 9px;
 }
 
 .campo-casilla input {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     accent-color: var(--negro);
 }
 
 .campo-casilla label {
     text-transform: none;
     font-size: 15px;
-    letter-spacing: 0;
+}
+
+.grupo-casillas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 22px;
 }
 
 .acciones {
     grid-column: 1 / -1;
     display: flex;
     flex-wrap: wrap;
-    gap: 14px;
-    margin-top: 6px;
+    gap: 10px;
+    margin-top: 8px;
 }
 
 .boton {
-    background-color: var(--negro);
-    color: var(--blanco);
+    background-color: var(--blanco);
+    color: var(--negro);
     border: 1px solid var(--negro);
-    border-radius: 999px;
-    padding: 12px 30px;
-    font-family: inherit;
-    font-size: 15px;
-    letter-spacing: 1px;
+    padding: 10px 24px;
+    font-size: 14px;
     cursor: pointer;
-}
-
-.boton:hover {
-    background-color: var(--blanco);
-    color: var(--negro);
-}
-
-.boton-contorno {
-    background-color: var(--blanco);
-    color: var(--negro);
-}
-
-.boton-contorno:hover {
-    background-color: var(--negro);
-    color: var(--blanco);
 }
 
 .mensaje {
     border: 1px solid var(--negro);
-    border-radius: 10px;
-    padding: 17px 22px;
-    font-size: 15px;
+    padding: 12px 16px;
+    font-size: 14px;
+    margin-bottom: 32px;
 }
 
 .mensaje-error {
@@ -228,7 +195,7 @@ body {
 .tabla-admin th,
 .tabla-admin td {
     border-bottom: 1px solid var(--negro);
-    padding: 15px 20px;
+    padding: 12px 20px 12px 0;
     text-align: left;
     vertical-align: middle;
     white-space: nowrap;
@@ -237,22 +204,24 @@ body {
 .tabla-admin th {
     font-size: 12px;
     font-weight: normal;
-    letter-spacing: 1px;
     text-transform: uppercase;
 }
 
-.tabla-admin tbody tr:last-child td {
-    border-bottom: none;
+.tabla-admin td:last-child,
+.tabla-admin th:last-child {
+    padding-right: 0;
+    text-align: right;
 }
 
 .tabla-admin .boton {
-    padding: 8px 20px;
-    font-size: 13px;
+    padding: 6px 14px;
+    font-size: 12px;
 }
 
 .acciones-fila {
     display: flex;
-    gap: 10px;
+    justify-content: flex-end;
+    gap: 6px;
 }
 
 .cargando {
@@ -261,39 +230,35 @@ body {
 
 .vacio {
     font-size: 15px;
-    margin-bottom: 28px;
+    margin-bottom: 22px;
 }
 
 @media (max-width: 768px) {
 
+    .columna {
+        padding: 0 18px 60px 18px;
+    }
+
     .admin-cabecera {
-        padding: 30px 6%;
+        padding: 30px 0 0 0;
     }
 
     .admin-cabecera h1 {
-        font-size: 22px;
-    }
-
-    .pestanas {
-        padding: 28px 6% 0 6%;
+        font-size: 21px;
     }
 
     .pestana {
         flex: 1;
         text-align: center;
-        padding: 11px 14px;
-    }
-
-    .panel {
-        padding: 28px 6% 55px 6%;
-    }
-
-    .recuadro {
-        padding: 24px;
+        padding: 9px 12px;
     }
 
     .formulario {
         grid-template-columns: 1fr;
+    }
+
+    .recuadro + .recuadro {
+        margin-top: 34px;
     }
 
 }

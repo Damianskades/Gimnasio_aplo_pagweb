@@ -6,16 +6,11 @@ import {
     where,
     addDoc,
     updateDoc,
-    deleteDoc,
-    deleteField
+    deleteDoc
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 import { db } from "../firebase/config.js";
 import { COLECCION_PLANES } from "../utils/constantes.js";
-
-function tieneValor(valor) {
-    return valor !== "" && valor !== null && valor !== undefined;
-}
 
 function convertirBeneficios(beneficios) {
     const lista = Array.isArray(beneficios)
@@ -32,7 +27,6 @@ function prepararPlan(datos) {
         nombre: String(datos.nombre).trim(),
         precio: Number(datos.precio),
         beneficios: convertirBeneficios(datos.beneficios),
-        destacado: Boolean(datos.destacado),
         activo: Boolean(datos.activo)
     };
 }
@@ -55,24 +49,12 @@ export async function listarActivos() {
 }
 
 export async function crear(datos) {
-    const plan = prepararPlan(datos);
-
-    if (tieneValor(datos.precioAnterior)) {
-        plan.precioAnterior = Number(datos.precioAnterior);
-    }
-
-    const referencia = await addDoc(collection(db, COLECCION_PLANES), plan);
+    const referencia = await addDoc(collection(db, COLECCION_PLANES), prepararPlan(datos));
     return referencia.id;
 }
 
 export async function actualizar(id, datos) {
-    const plan = prepararPlan(datos);
-
-    plan.precioAnterior = tieneValor(datos.precioAnterior)
-        ? Number(datos.precioAnterior)
-        : deleteField();
-
-    await updateDoc(doc(db, COLECCION_PLANES, id), plan);
+    await updateDoc(doc(db, COLECCION_PLANES, id), prepararPlan(datos));
 }
 
 export async function eliminar(id) {

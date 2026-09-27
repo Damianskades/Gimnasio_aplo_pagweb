@@ -7,23 +7,16 @@ import {
     addDoc,
     updateDoc,
     deleteDoc,
-    deleteField,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 import { db } from "../firebase/config.js";
 import { COLECCION_PRODUCTOS } from "../utils/constantes.js";
 
-function tieneValor(valor) {
-    return valor !== "" && valor !== null && valor !== undefined;
-}
-
 function prepararProducto(datos) {
     return {
         nombre: String(datos.nombre).trim(),
-        marca: String(datos.marca).trim(),
         categoria: String(datos.categoria).trim(),
-        descripcion: String(datos.descripcion).trim(),
         precio: Number(datos.precio),
         imagenPrincipal: String(datos.imagenPrincipal).trim(),
         stock: Number(datos.stock),
@@ -52,22 +45,12 @@ export async function crear(datos) {
     const producto = prepararProducto(datos);
     producto.fechaCreacion = serverTimestamp();
 
-    if (tieneValor(datos.precioAnterior)) {
-        producto.precioAnterior = Number(datos.precioAnterior);
-    }
-
     const referencia = await addDoc(collection(db, COLECCION_PRODUCTOS), producto);
     return referencia.id;
 }
 
 export async function actualizar(id, datos) {
-    const producto = prepararProducto(datos);
-
-    producto.precioAnterior = tieneValor(datos.precioAnterior)
-        ? Number(datos.precioAnterior)
-        : deleteField();
-
-    await updateDoc(doc(db, COLECCION_PRODUCTOS, id), producto);
+    await updateDoc(doc(db, COLECCION_PRODUCTOS, id), prepararProducto(datos));
 }
 
 export async function eliminar(id) {

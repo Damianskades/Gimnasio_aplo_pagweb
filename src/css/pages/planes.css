@@ -19,37 +19,12 @@ h2 {
     margin-bottom: 50px;
 }
 
-.destacada {
-    border: 6px solid var(--dorado);
-    box-shadow: 8px 8px 0px var(--hueso);
-}
-
-.tarjeta .etiqueta {
-    display: inline-block;
-    background-color: var(--dorado);
-    color: var(--negro);
-    font-family: var(--fuente-destacada);
-    letter-spacing: 2px;
-    font-size: 16px;
-    padding: 8px 18px;
-    margin-bottom: 18px;
-}
-
 .tarjeta .precio {
     font-family: var(--fuente-destacada);
     font-size: 52px;
     color: var(--dorado);
     margin-top: 15px;
     margin-bottom: 25px;
-}
-
-.tarjeta .precio-anterior {
-    display: block;
-    font-family: var(--fuente-texto);
-    font-size: 20px;
-    color: var(--gris);
-    text-decoration: line-through;
-    margin-top: 8px;
 }
 
 .beneficios {

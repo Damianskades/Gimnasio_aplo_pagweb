@@ -26,67 +26,31 @@
     display: block;
 }
 
-.etiquetas {
+.etiqueta-agotado {
     position: absolute;
     top: 14px;
     left: 14px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 9px;
-}
-
-.etiqueta {
+    background-color: var(--negro);
+    color: var(--hueso);
+    border: 3px solid var(--hueso);
     font-family: var(--fuente-destacada);
     font-size: 14px;
     letter-spacing: 2px;
     padding: 7px 14px;
 }
 
-.etiqueta-oferta {
-    background-color: var(--dorado);
-    color: var(--negro);
-    border: 3px solid var(--negro);
-}
-
-.etiqueta-agotado {
-    background-color: var(--negro);
-    color: var(--hueso);
-    border: 3px solid var(--hueso);
-}
-
-.producto-marca {
-    font-size: 15px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-top: 20px;
-}
-
 .tarjeta-producto h3 {
     font-size: 21px;
     text-transform: uppercase;
-    margin-top: 10px;
+    margin-top: 22px;
     margin-bottom: 20px;
-}
-
-.producto-precios {
-    display: flex;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-top: auto;
 }
 
 .precio {
     font-family: var(--fuente-destacada);
     font-size: 32px;
     color: var(--dorado);
-}
-
-.precio-anterior {
-    font-size: 18px;
-    color: var(--gris);
-    text-decoration: line-through;
+    margin-top: auto;
 }
 
 @media (max-width: 768px) {

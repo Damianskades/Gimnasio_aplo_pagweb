@@ -14,13 +14,10 @@ const colecciones = {
         ejemplos: PRODUCTOS_EJEMPLO,
         campos: [
             { nombre: "nombre", etiqueta: "Nombre", tipo: "texto", obligatorio: true },
-            { nombre: "marca", etiqueta: "Marca", tipo: "texto", obligatorio: true },
             { nombre: "categoria", etiqueta: "Categoría", tipo: "texto", obligatorio: true },
-            { nombre: "descripcion", etiqueta: "Descripción", tipo: "parrafo", obligatorio: true, ancho: true },
             { nombre: "precio", etiqueta: "Precio", tipo: "numero", obligatorio: true },
-            { nombre: "precioAnterior", etiqueta: "Precio anterior", tipo: "numero", obligatorio: false },
-            { nombre: "imagenPrincipal", etiqueta: "Imagen principal (URL)", tipo: "enlace", obligatorio: true, ancho: true },
             { nombre: "stock", etiqueta: "Stock", tipo: "numero", obligatorio: true },
+            { nombre: "imagenPrincipal", etiqueta: "Imagen principal (URL)", tipo: "enlace", obligatorio: true, ancho: true },
             { nombre: "activo", etiqueta: "Visible en el sitio", tipo: "casilla", porDefecto: true }
         ]
     },
@@ -33,9 +30,7 @@ const colecciones = {
         campos: [
             { nombre: "nombre", etiqueta: "Nombre", tipo: "texto", obligatorio: true },
             { nombre: "precio", etiqueta: "Precio", tipo: "numero", obligatorio: true },
-            { nombre: "precioAnterior", etiqueta: "Precio anterior", tipo: "numero", obligatorio: false },
             { nombre: "beneficios", etiqueta: "Beneficios (uno por línea)", tipo: "lista", obligatorio: true, ancho: true },
-            { nombre: "destacado", etiqueta: "Marcar como más elegido", tipo: "casilla", porDefecto: false },
             { nombre: "activo", etiqueta: "Visible en el sitio", tipo: "casilla", porDefecto: true }
         ]
     },
@@ -46,7 +41,7 @@ const colecciones = {
         service: horarioService,
         ejemplos: HORARIOS_EJEMPLO,
         campos: [
-            { nombre: "clase", etiqueta: "Clase", tipo: "texto", obligatorio: true },
+            { nombre: "clase", etiqueta: "Clase", tipo: "texto", obligatorio: true, ancho: true },
             { nombre: "dias", etiqueta: "Días", tipo: "casillas", opciones: DIAS_SEMANA, obligatorio: true, ancho: true },
             { nombre: "horaInicio", etiqueta: "Hora de inicio", tipo: "hora", obligatorio: true },
             { nombre: "horaFin", etiqueta: "Hora de fin", tipo: "hora", obligatorio: true },
@@ -96,19 +91,19 @@ function textoDeCelda(campo, valor) {
     }
 
     if (campo.tipo === "lista") {
-        return Array.isArray(valor) ? valor.join(" · ") : "—";
+        return Array.isArray(valor) ? valor.join(" - ") : "-";
     }
 
     if (campo.tipo === "casillas") {
-        return Array.isArray(valor) && valor.length > 0 ? valor.join(", ") : "—";
+        return Array.isArray(valor) && valor.length > 0 ? valor.join(", ") : "-";
     }
 
     if (valor === null || valor === undefined || valor === "") {
-        return "—";
+        return "-";
     }
 
     const texto = String(valor);
-    return texto.length > 60 ? texto.slice(0, 60) + "…" : texto;
+    return texto.length > 60 ? texto.slice(0, 60) + "..." : texto;
 }
 
 function crearCampo(campo, registro) {
@@ -150,9 +145,8 @@ function crearCampo(campo, registro) {
     const etiqueta = campo.obligatorio ? campo.etiqueta : campo.etiqueta + " (opcional)";
     let control = "";
 
-    if (campo.tipo === "parrafo" || campo.tipo === "lista") {
-        const filas = campo.tipo === "lista" ? 5 : 3;
-        control = `<textarea id="${id}" rows="${filas}">${escaparHtml(valor)}</textarea>`;
+    if (campo.tipo === "lista") {
+        control = `<textarea id="${id}">${escaparHtml(valor)}</textarea>`;
     } else {
         const extra = campo.tipo === "numero" ? ' step="0.01" min="0"' : "";
         control = `<input type="${tiposHtml[campo.tipo]}" id="${id}" value="${escaparHtml(valor)}"${extra}>`;
@@ -166,6 +160,20 @@ function crearCampo(campo, registro) {
     `;
 }
 
+function ajustarAltura(area) {
+    area.style.height = "auto";
+    const bordes = area.offsetHeight - area.clientHeight;
+    area.style.height = (area.scrollHeight + bordes) + "px";
+}
+
+function ajustarTextareas(definicion) {
+    for (const campo of definicion.campos) {
+        if (campo.tipo === "lista") {
+            ajustarAltura(document.getElementById("campo-" + campo.nombre));
+        }
+    }
+}
+
 function crearFormulario(definicion, registro) {
     const editando = Boolean(registro);
 
@@ -174,7 +182,7 @@ function crearFormulario(definicion, registro) {
         .join("");
 
     const botonCancelar = editando
-        ? '<button type="button" class="boton boton-contorno" data-accion="cancelar">Cancelar</button>'
+        ? '<button type="button" class="boton" data-accion="cancelar">Cancelar</button>'
         : "";
 
     return `
@@ -193,7 +201,7 @@ function crearTabla(definicion, registros) {
     if (registros.length === 0) {
         return `
             <div class="recuadro">
-                <h2>Todos los registros</h2>
+                <h2>Registros</h2>
                 <p class="vacio">Todavía no hay registros. Usa el formulario de arriba para crear el primero, o carga los datos de ejemplo.</p>
                 <div class="acciones">
                     <button type="button" class="boton" data-accion="sembrar">Cargar ${definicion.ejemplos.length} datos de ejemplo</button>
@@ -218,7 +226,7 @@ function crearTabla(definicion, registros) {
                     <td>
                         <div class="acciones-fila">
                             <button type="button" class="boton" data-accion="editar" data-id="${registro.id}">Editar</button>
-                            <button type="button" class="boton boton-contorno" data-accion="eliminar" data-id="${registro.id}">Eliminar</button>
+                            <button type="button" class="boton" data-accion="eliminar" data-id="${registro.id}">Eliminar</button>
                         </div>
                     </td>
                 </tr>
@@ -228,7 +236,7 @@ function crearTabla(definicion, registros) {
 
     return `
         <div class="recuadro">
-            <h2>Todos los registros (${registros.length})</h2>
+            <h2>Registros (${registros.length})</h2>
             <div class="tabla-scroll">
                 <table class="tabla-admin">
                     <thead>
@@ -306,6 +314,8 @@ async function refrescar(texto, tipo) {
         crearMensaje(mensaje === undefined ? "" : mensaje, error ? "error" : tipo) +
         crearFormulario(definicion, registro) +
         crearTabla(definicion, ordenar(definicion, registros));
+
+    ajustarTextareas(definicion);
 }
 
 function leerFormulario(definicion) {
@@ -450,6 +460,12 @@ pestanas.addEventListener("click", evento => {
 
     if (boton) {
         mostrarPestana(boton.dataset.clave);
+    }
+});
+
+panel.addEventListener("input", evento => {
+    if (evento.target.tagName === "TEXTAREA") {
+        ajustarAltura(evento.target);
     }
 });
 

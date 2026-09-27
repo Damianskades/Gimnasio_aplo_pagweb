@@ -5,30 +5,15 @@ import escaparHtml from "../utils/escaparHtml.js";
 import formatoMoneda from "../utils/formatoMoneda.js";
 import { listarActivos } from "../services/planService.js";
 
-function crearPrecio(plan) {
-    const precio = Number(plan.precio);
-    const precioAnterior = Number(plan.precioAnterior);
-
-    const anterior = Number.isFinite(precioAnterior) && precioAnterior > precio
-        ? `<span class="precio-anterior">${formatoMoneda(precioAnterior)}</span>`
-        : "";
-
-    return `<p class="precio">${formatoMoneda(precio)}${anterior}</p>`;
-}
-
 function crearTarjetaPlan(plan, raiz) {
-    const clase = plan.destacado ? "tarjeta destacada" : "tarjeta";
-    const etiqueta = plan.destacado ? '<p class="etiqueta">MÁS ELEGIDO</p>' : "";
-
     const beneficios = Array.isArray(plan.beneficios)
         ? plan.beneficios.map(beneficio => `<li>${escaparHtml(beneficio)}</li>`).join("")
         : "";
 
     return `
-        <div class="${clase}">
-            ${etiqueta}
+        <div class="tarjeta">
             <h2>${escaparHtml(plan.nombre)}</h2>
-            ${crearPrecio(plan)}
+            <p class="precio">${formatoMoneda(plan.precio)}</p>
             <ul class="beneficios">
                 ${beneficios}
             </ul>

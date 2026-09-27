@@ -5,5 +5,8 @@ const formateador = new Intl.NumberFormat("es-PE", {
 
 export default function formatoMoneda(valor) {
     const numero = Number(valor);
-    return formateador.format(Number.isFinite(numero) ? numero : 0);
+
+    return formateador
+        .format(Number.isFinite(numero) ? numero : 0)
+        .replace(/[\u202F\u00A0]/g, " ");
 }
