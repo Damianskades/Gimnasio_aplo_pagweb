@@ -1,0 +1,66 @@
+<section class="titulo">
+    <h1>INSCRÍBETE</h1>
+    <p class="intro">Completa tus datos y nos comunicamos contigo.</p>
+</section>
+
+<section class="seccion">
+    <form class="bloque formulario" [formGroup]="formulario" (ngSubmit)="registrar()" novalidate>
+
+        <div class="mb-4">
+            <label class="form-label" for="nombre">Nombre</label>
+            <input class="form-control" type="text" id="nombre" formControlName="nombre"
+                [class.is-invalid]="invalido('nombre')">
+            <div class="invalid-feedback">Escribe tu nombre.</div>
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label" for="apellido">Apellido</label>
+            <input class="form-control" type="text" id="apellido" formControlName="apellido"
+                [class.is-invalid]="invalido('apellido')">
+            <div class="invalid-feedback">Escribe tu apellido.</div>
+        </div>
+
+        <div class="mb-4">
+            <label class="form-label" for="correo">Correo</label>
+            <input class="form-control" type="email" id="correo" formControlName="correo"
+                [class.is-invalid]="invalido('correo')">
+            <div class="invalid-feedback">Escribe un correo válido.</div>
+        </div>
+
+        <div class="mb-5">
+            <label class="form-label" for="plan">Plan</label>
+            <select class="form-select" id="plan" formControlName="plan" [class.is-invalid]="invalido('plan')">
+                @if (cargandoPlanes()) {
+                    <option value="">Cargando planes...</option>
+                } @else if (planes().length === 0) {
+                    <option value="">No hay planes disponibles</option>
+                }
+                @for (plan of planes(); track plan.id) {
+                    <option [value]="plan.id">{{ plan.nombre }} - {{ plan.precio | moneda }}</option>
+                }
+            </select>
+            <div class="invalid-feedback">Elige un plan.</div>
+        </div>
+
+        <button class="btn btn-apolo" type="submit">ENVIAR</button>
+
+    </form>
+
+    @if (mensaje(); as aviso) {
+        <div class="alert alert-apolo mensaje mt-5" role="alert"
+            [class.alert-danger]="aviso.tipo === 'error'" [class.alert-exito]="aviso.tipo === 'exito'">
+            {{ aviso.texto }}
+        </div>
+    }
+</section>
+
+<section class="seccion pb-5">
+    <h2>DATOS DE CONTACTO</h2>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
+        @for (dato of datosContacto; track dato.titulo) {
+            <div class="col">
+                <app-tarjeta [tarjeta]="dato" />
+            </div>
+        }
+    </div>
+</section>

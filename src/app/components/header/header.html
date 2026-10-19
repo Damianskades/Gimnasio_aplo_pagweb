@@ -1,0 +1,55 @@
+<header class="cabecera">
+    <nav class="navbar navbar-expand-xl">
+        <div class="container-fluid px-0">
+
+            <a class="navbar-brand logo" routerLink="/" (click)="cerrarMenu()">
+                <img src="img/logo_apolo.jpeg" alt="Logo de Gimnasio Apolo">
+                GIMNASIO APOLO
+            </a>
+
+            <div class="d-flex align-items-center gap-4 order-xl-last ms-auto ms-xl-4">
+                <a class="carrito" routerLink="/carrito" (click)="cerrarMenu()" aria-label="Carrito de compras">
+                    <svg width="28" height="28" fill="currentColor" viewBox="0 0 16 16" aria-hidden="true">
+                        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l.84 4.479 9.144-.459L13.89 4zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
+                    </svg>
+                    @if (carrito.cantidadTotal() > 0) {
+                        <span class="contador">{{ carrito.cantidadTotal() }}</span>
+                    }
+                </a>
+
+                <button class="navbar-toggler" type="button" aria-controls="menu-principal"
+                    [attr.aria-expanded]="menuAbierto()" aria-label="Abrir o cerrar el menú" (click)="alternarMenu()">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+
+            <div class="collapse navbar-collapse" id="menu-principal" [class.show]="menuAbierto()">
+                <ul class="navbar-nav ms-auto menu">
+                    @for (enlace of enlaces; track enlace.ruta) {
+                        <li class="nav-item">
+                            <a class="nav-link" [routerLink]="enlace.ruta" routerLinkActive="active"
+                                [routerLinkActiveOptions]="{ exact: true }" ariaCurrentWhenActive="page"
+                                (click)="cerrarMenu()">
+                                {{ enlace.texto }}
+                            </a>
+                        </li>
+                    }
+
+                    @if (auth.conectado()) {
+                        <li class="nav-item">
+                            <span class="nav-link usuario">{{ auth.nombre() }}</span>
+                        </li>
+                        <li class="nav-item">
+                            <button type="button" class="nav-link" (click)="salir()">Salir</button>
+                        </li>
+                    } @else if (auth.listo()) {
+                        <li class="nav-item">
+                            <a class="nav-link" routerLink="/login" (click)="cerrarMenu()">Ingresar</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+</header>

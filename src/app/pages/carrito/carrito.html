@@ -1,0 +1,95 @@
+<section class="titulo">
+    <h1>TU CARRITO</h1>
+    <p class="intro">Revisa tus productos antes de confirmar el pedido.</p>
+</section>
+
+<section class="seccion pt-4">
+
+    @if (confirmado(); as pedido) {
+
+        <div class="bloque mensaje">
+            <h2>PEDIDO REGISTRADO</h2>
+            <p>Tu código de pedido es <strong>{{ pedido.codigo }}</strong>.</p>
+            <p>Total: <span class="precio">{{ pedido.total | moneda }}</span></p>
+            <p>Acércate a la tienda del gimnasio con este código para pagar y recoger tu pedido.</p>
+            <a class="btn btn-apolo mt-3" routerLink="/productos">SEGUIR COMPRANDO</a>
+        </div>
+
+    } @else if (carrito.items().length === 0) {
+
+        <p class="aviso">Tu carrito está vacío. Agrega productos desde nuestra tienda.</p>
+        <a class="btn btn-apolo mt-4" routerLink="/productos">VER PRODUCTOS</a>
+
+    } @else {
+
+        <div class="row g-4 g-md-5">
+
+            <div class="col-12 col-lg-8">
+                <div class="d-flex flex-column gap-4">
+                    @for (item of carrito.items(); track item.id) {
+                        <article class="card tarjeta item">
+                            <div class="row g-4 align-items-center">
+
+                                <div class="col-4 col-sm-3">
+                                    <img class="img-fluid item-imagen" [src]="item.imagen" [alt]="item.nombre">
+                                </div>
+
+                                <div class="col-8 col-sm-9">
+                                    <h3 class="card-title">{{ item.nombre }}</h3>
+                                    <p class="card-text">{{ item.precio | moneda }} cada uno</p>
+
+                                    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+                                        <div class="cantidad">
+                                            <button type="button" (click)="restar(item)" aria-label="Quitar una unidad">-</button>
+                                            <span>{{ item.cantidad }}</span>
+                                            <button type="button" (click)="sumar(item)" [disabled]="item.cantidad >= item.stock"
+                                                aria-label="Agregar una unidad">+</button>
+                                        </div>
+                                        <p class="precio subtotal mb-0">{{ item.precio * item.cantidad | moneda }}</p>
+                                    </div>
+
+                                    <button type="button" class="quitar mt-3" (click)="carrito.quitar(item.id)">Quitar</button>
+                                </div>
+
+                            </div>
+                        </article>
+                    }
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4">
+                <div class="bloque resumen">
+                    <h2>RESUMEN</h2>
+
+                    <div class="fila">
+                        <span>Productos</span>
+                        <span>{{ carrito.cantidadTotal() }}</span>
+                    </div>
+                    <div class="fila total">
+                        <span>TOTAL</span>
+                        <span class="precio">{{ carrito.total() | moneda }}</span>
+                    </div>
+
+                    @if (error()) {
+                        <p class="error">{{ error() }}</p>
+                    }
+
+                    @if (!auth.conectado()) {
+                        <p class="nota">Necesitas iniciar sesión para confirmar el pedido.</p>
+                    }
+
+                    <button type="button" class="btn btn-apolo w-100 mt-3" [disabled]="procesando()"
+                        (click)="finalizarCompra()">
+                        {{ procesando() ? "PROCESANDO..." : "FINALIZAR COMPRA" }}
+                    </button>
+
+                    <button type="button" class="btn btn-apolo-contorno w-100 mt-4" (click)="carrito.vaciar()">
+                        VACIAR CARRITO
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    }
+
+</section>

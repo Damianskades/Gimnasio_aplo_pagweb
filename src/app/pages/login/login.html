@@ -1,0 +1,54 @@
+<div class="sitio pantalla" data-bs-theme="dark">
+    <main class="d-flex align-items-center justify-content-center">
+
+        <div class="bloque cuadro">
+
+            <div class="pestanas">
+                <button type="button" [class.activa]="modo() === 'ingresar'" (click)="cambiarModo('ingresar')">
+                    INICIAR SESIÓN
+                </button>
+                <button type="button" [class.activa]="modo() === 'registrar'" (click)="cambiarModo('registrar')">
+                    REGISTRARSE
+                </button>
+            </div>
+
+            <form [formGroup]="formulario" (ngSubmit)="enviar()" novalidate>
+
+                @if (modo() === "registrar") {
+                    <div class="mb-4">
+                        <label class="form-label" for="nombre">Nombre</label>
+                        <input class="form-control" type="text" id="nombre" formControlName="nombre"
+                            autocomplete="name" [class.is-invalid]="invalido('nombre')">
+                        <div class="invalid-feedback">Escribe tu nombre.</div>
+                    </div>
+                }
+
+                <div class="mb-4">
+                    <label class="form-label" for="correo">Correo</label>
+                    <input class="form-control" type="email" id="correo" formControlName="correo"
+                        autocomplete="email" [class.is-invalid]="invalido('correo')">
+                    <div class="invalid-feedback">Escribe un correo válido.</div>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label" for="contrasena">Contraseña</label>
+                    <input class="form-control" type="password" id="contrasena" formControlName="contrasena"
+                        [attr.autocomplete]="modo() === 'registrar' ? 'new-password' : 'current-password'"
+                        [class.is-invalid]="invalido('contrasena')">
+                    <div class="invalid-feedback">La contraseña debe tener al menos 6 caracteres.</div>
+                </div>
+
+                @if (error()) {
+                    <p class="error">{{ error() }}</p>
+                }
+
+                <button class="btn btn-apolo w-100 mt-2" type="submit" [disabled]="enviando()">
+                    {{ modo() === "registrar" ? "REGISTRARSE" : "INICIAR SESIÓN" }}
+                </button>
+
+            </form>
+
+        </div>
+
+    </main>
+</div>

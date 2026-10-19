@@ -1,0 +1,128 @@
+.mensaje {
+    max-width: 700px;
+}
+
+.mensaje p {
+    color: var(--gris);
+    font-size: 19px;
+}
+
+.mensaje strong {
+    color: var(--hueso);
+}
+
+.mensaje .precio {
+    font-size: 28px;
+}
+
+.item {
+    padding: 20px;
+}
+
+.item-imagen {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border: 3px solid var(--dorado);
+}
+
+.card-title {
+    font-size: 20px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+.cantidad {
+    display: inline-flex;
+    border: 3px solid var(--hueso);
+}
+
+.cantidad button {
+    width: 42px;
+    height: 42px;
+    background-color: var(--negro);
+    color: var(--hueso);
+    border: none;
+    font-size: 22px;
+}
+
+.cantidad button:disabled {
+    color: var(--gris);
+}
+
+.cantidad span {
+    min-width: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-left: 3px solid var(--hueso);
+    border-right: 3px solid var(--hueso);
+    font-family: var(--fuente-destacada);
+    font-size: 20px;
+}
+
+.subtotal {
+    font-size: 28px;
+}
+
+.quitar {
+    padding: 0;
+    background: none;
+    border: none;
+    color: var(--gris);
+    font-size: 15px;
+    text-decoration: underline;
+}
+
+.resumen {
+    border-color: var(--hueso);
+}
+
+.resumen .btn.btn-apolo {
+    --bs-btn-padding-x: 20px;
+}
+
+.fila {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 3px solid var(--negro);
+    color: var(--gris);
+    font-size: 17px;
+}
+
+.fila.total {
+    border-bottom: none;
+    color: var(--hueso);
+    font-family: var(--fuente-destacada);
+    font-size: 22px;
+    letter-spacing: 2px;
+}
+
+.fila.total .precio {
+    font-size: 34px;
+    letter-spacing: 0;
+}
+
+.nota {
+    color: var(--gris);
+    font-size: 15px;
+    margin: 10px 0 0 0;
+}
+
+.error {
+    color: var(--bs-form-invalid-color);
+    font-size: 16px;
+    margin: 10px 0 0 0;
+}
+
+@media (max-width: 768px) {
+    .card-title {
+        font-size: 17px;
+    }
+
+    .subtotal {
+        font-size: 22px;
+    }
+}

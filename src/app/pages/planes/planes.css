@@ -1,0 +1,44 @@
+.card-body {
+    padding: 35px 25px;
+}
+
+.card-title {
+    font-size: 30px;
+    letter-spacing: 2px;
+    color: var(--hueso);
+    margin-bottom: 0;
+}
+
+.precio {
+    font-size: 52px;
+    margin-top: 15px;
+    margin-bottom: 25px;
+}
+
+.beneficios {
+    --bs-list-group-bg: transparent;
+    --bs-list-group-color: var(--gris);
+    --bs-list-group-border-color: var(--negro);
+    --bs-list-group-border-width: 3px;
+    --bs-list-group-item-padding-x: 0;
+    --bs-list-group-item-padding-y: 10px;
+    margin-bottom: 35px;
+    font-size: 17px;
+}
+
+.btn.btn-apolo {
+    --bs-btn-padding-x: 35px;
+    --bs-btn-padding-y: 15px;
+    --bs-btn-font-size: 18px;
+}
+
+@media (max-width: 768px) {
+    .card-title {
+        font-size: 24px;
+    }
+
+    .precio {
+        font-size: 40px;
+    }
+
+}

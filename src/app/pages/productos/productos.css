@@ -1,0 +1,47 @@
+.tarjeta {
+    padding: 25px;
+}
+
+.card-img-top {
+    height: 220px;
+    object-fit: cover;
+    border: 3px solid var(--dorado);
+}
+
+.etiqueta-agotado {
+    background-color: var(--negro);
+    color: var(--hueso);
+    border: 3px solid var(--hueso);
+    font-family: var(--fuente-destacada);
+    font-size: 14px;
+    font-weight: normal;
+    letter-spacing: 2px;
+    padding: 7px 14px;
+}
+
+.card-title {
+    font-size: 21px;
+    text-transform: uppercase;
+    margin-top: 22px;
+    margin-bottom: 20px;
+}
+
+.precio {
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .card-img-top {
+        height: 200px;
+    }
+
+    .card-title {
+        font-size: 19px;
+    }
+
+    .precio {
+        font-size: 28px;
+    }
+
+}

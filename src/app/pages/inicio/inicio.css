@@ -1,0 +1,50 @@
+.hero {
+    padding: 100px 5%;
+}
+
+.hero h1 {
+    font-size: 72px;
+}
+
+.eslogan {
+    color: var(--gris);
+    font-size: 22px;
+    margin-top: 25px;
+    margin-bottom: 45px;
+}
+
+.marca p {
+    color: var(--gris);
+    font-size: 19px;
+    line-height: 1.8;
+}
+
+.marca-logo {
+    max-width: 320px;
+    border: 3px solid var(--dorado);
+    border-radius: 25px;
+}
+
+.nosotros {
+    max-width: 900px;
+}
+
+.nosotros p {
+    font-size: 19px;
+    line-height: 1.8;
+}
+
+@media (max-width: 768px) {
+    .hero {
+        padding: 60px 5%;
+    }
+
+    .hero h1 {
+        font-size: 36px;
+    }
+
+    .eslogan {
+        font-size: 18px;
+    }
+
+}

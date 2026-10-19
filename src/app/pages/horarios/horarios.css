@@ -1,0 +1,66 @@
+.tabla-contenedor {
+    border: 3px solid var(--hueso);
+    box-shadow: 8px 8px 0 var(--dorado);
+}
+
+.tabla {
+    --bs-table-bg: var(--negro);
+    --bs-table-striped-bg: var(--negro-suave);
+    --bs-table-striped-color: var(--hueso);
+    --bs-table-color: var(--hueso);
+    --bs-border-width: 3px;
+    --bs-border-color: var(--hueso);
+    border-style: hidden;
+}
+
+.tabla th {
+    --bs-table-bg: var(--dorado);
+    --bs-table-color: var(--negro);
+    font-family: var(--fuente-destacada);
+    font-weight: normal;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.tabla th,
+.tabla td {
+    padding: 18px;
+    font-size: 17px;
+}
+
+.tabla th {
+    font-size: 20px;
+}
+
+.reglas {
+    max-width: 800px;
+    border-color: var(--dorado);
+    box-shadow: 8px 8px 0 var(--hueso);
+}
+
+.reglas .list-group {
+    --bs-list-group-bg: transparent;
+    --bs-list-group-color: var(--hueso);
+    --bs-list-group-border-color: var(--negro);
+    --bs-list-group-border-width: 3px;
+    --bs-list-group-item-padding-x: 0;
+    --bs-list-group-item-padding-y: 14px;
+    font-size: 19px;
+}
+
+@media (max-width: 768px) {
+    .tabla th,
+    .tabla td {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .tabla th {
+        font-size: 15px;
+    }
+
+    .reglas .list-group {
+        font-size: 16px;
+    }
+
+}

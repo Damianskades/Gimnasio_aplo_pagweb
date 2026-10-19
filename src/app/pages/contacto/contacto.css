@@ -1,0 +1,8 @@
+.formulario {
+    max-width: 600px;
+    border-color: var(--hueso);
+}
+
+.mensaje {
+    max-width: 600px;
+}

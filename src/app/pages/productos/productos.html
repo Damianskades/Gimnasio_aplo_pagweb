@@ -1,0 +1,48 @@
+<section class="titulo">
+    <h1>PRODUCTOS</h1>
+    <p class="intro">Suplementos y accesorios originales para tu entrenamiento.</p>
+</section>
+
+<section class="seccion pt-4">
+    @switch (estado()) {
+        @case ("cargando") {
+            <app-cargando mensaje="Cargando los productos..." />
+        }
+        @case ("error") {
+            <p class="aviso">No pudimos cargar los productos. Revisa tu conexión a internet e intenta de nuevo.</p>
+        }
+        @default {
+            @if (productos().length === 0) {
+                <p class="aviso">Todavía no hay productos publicados. Vuelve a revisar pronto.</p>
+            } @else {
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-4 g-md-5">
+                    @for (producto of productos(); track producto.id) {
+                        <div class="col">
+                            <article class="card tarjeta h-100">
+                                <div class="position-relative">
+                                    <img class="card-img-top" [src]="producto.imagenPrincipal" [alt]="producto.nombre">
+                                    @if (agotado(producto)) {
+                                        <span class="badge etiqueta-agotado position-absolute top-0 start-0 m-3">AGOTADO</span>
+                                    }
+                                </div>
+                                <div class="card-body d-flex flex-column px-0 pb-0">
+                                    <h3 class="card-title">{{ producto.nombre }}</h3>
+                                    <p class="precio mt-auto">{{ producto.precio | moneda }}</p>
+
+                                    @if (agotado(producto)) {
+                                        <button type="button" class="btn btn-apolo btn-apolo-sm" disabled>AGOTADO</button>
+                                    } @else {
+                                        <button type="button" class="btn btn-apolo btn-apolo-sm" [disabled]="sinStockDisponible(producto)"
+                                            (click)="carrito.agregar(producto)">
+                                            AGREGAR AL CARRITO
+                                        </button>
+                                    }
+                                </div>
+                            </article>
+                        </div>
+                    }
+                </div>
+            }
+        }
+    }
+</section>

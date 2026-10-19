@@ -1,0 +1,152 @@
+<div class="admin">
+    <div class="columna">
+
+        <header class="admin-cabecera">
+            <h1>Panel de administración</h1>
+            <a class="enlace-sitio" routerLink="/">Volver al sitio</a>
+        </header>
+
+        <nav class="pestanas">
+            @for (clave of claves; track clave) {
+                <button type="button" class="pestana" [class.activa]="clave === claveActiva()" (click)="mostrarPestana(clave)">
+                    {{ colecciones[clave].titulo }}
+                </button>
+            }
+        </nav>
+
+        <main class="panel">
+
+            @if (!cargando()) {
+
+                @if (mensaje(); as aviso) {
+                    <p class="mensaje" [class.mensaje-error]="aviso.tipo === 'error'">{{ aviso.texto }}</p>
+                }
+
+                @if (mostrarFormulario()) {
+                    <form class="recuadro formulario" id="formulario" novalidate (submit)="guardar($event)">
+                        <h2>{{ idEnEdicion() ? definicion.tituloEditar : definicion.tituloNuevo }}</h2>
+
+                        @for (campo of definicion.campos; track campo.nombre) {
+                            @let id = 'campo-' + campo.nombre;
+
+                            @if (campo.soloLectura) {
+                                <div class="campo" [class.campo-ancho]="campo.ancho">
+                                    <label>{{ campo.etiqueta }}</label>
+                                    <p class="valor">{{ textoDeCelda(campo, registroEnEdicion()) }}</p>
+                                </div>
+                            } @else {
+                                @switch (campo.tipo) {
+                                    @case ("casilla") {
+                                        <div class="campo campo-casilla">
+                                            <input type="checkbox" [id]="id" [checked]="marcada(campo)"
+                                                (change)="cambiarCasilla(campo, $event)">
+                                            <label [for]="id">{{ campo.etiqueta }}</label>
+                                        </div>
+                                    }
+                                    @case ("casillas") {
+                                        <div class="campo campo-ancho">
+                                            <label>{{ campo.etiqueta }}</label>
+                                            <div class="grupo-casillas">
+                                                @for (opcion of campo.opciones; track opcion; let i = $index) {
+                                                    <div class="campo-casilla">
+                                                        <input type="checkbox" [id]="id + '-' + i" [checked]="opcionMarcada(campo, opcion)"
+                                                            (change)="cambiarOpcion(campo, opcion, $event)">
+                                                        <label [for]="id + '-' + i">{{ opcion }}</label>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                    @case ("opciones") {
+                                        <div class="campo">
+                                            <label [for]="id">{{ campo.etiqueta }}</label>
+                                            <select [id]="id" (change)="cambiarTexto(campo, $event)">
+                                                @for (opcion of campo.opciones; track opcion) {
+                                                    <option [value]="opcion" [selected]="texto(campo) === opcion">{{ textoOpcion(opcion) }}</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    }
+                                    @case ("lista") {
+                                        <div class="campo" [class.campo-ancho]="campo.ancho">
+                                            <label [for]="id">{{ campo.obligatorio ? campo.etiqueta : campo.etiqueta + " (opcional)" }}</label>
+                                            <textarea [id]="id" [rows]="filas(campo)" [value]="texto(campo)"
+                                                (input)="cambiarTexto(campo, $event)"></textarea>
+                                        </div>
+                                    }
+                                    @default {
+                                        <div class="campo" [class.campo-ancho]="campo.ancho">
+                                            <label [for]="id">{{ campo.obligatorio ? campo.etiqueta : campo.etiqueta + " (opcional)" }}</label>
+                                            <input [type]="tipoHtml(campo)" [id]="id" [value]="texto(campo)"
+                                                [attr.step]="campo.tipo === 'numero' ? '0.01' : null"
+                                                [attr.min]="campo.tipo === 'numero' ? '0' : null"
+                                                (input)="cambiarTexto(campo, $event)">
+                                        </div>
+                                    }
+                                }
+                            }
+                        }
+
+                        <div class="acciones">
+                            <button type="submit" class="boton">{{ idEnEdicion() ? "Actualizar" : "Guardar" }}</button>
+                            @if (idEnEdicion()) {
+                                <button type="button" class="boton" (click)="cancelar()">Cancelar</button>
+                            }
+                        </div>
+                    </form>
+                }
+
+                @if (registros().length === 0) {
+                    <div class="recuadro">
+                        <h2>Registros</h2>
+                        @if (definicion.ejemplos.length > 0) {
+                            <p class="vacio">Todavía no hay registros. Usa el formulario de arriba para crear el primero, o carga los datos de ejemplo.</p>
+                            <div class="acciones">
+                                <button type="button" class="boton" (click)="sembrar()">Cargar {{ definicion.ejemplos.length }} datos de ejemplo</button>
+                            </div>
+                        } @else {
+                            <p class="vacio">Todavía no hay registros.</p>
+                        }
+                    </div>
+                } @else {
+                    <div class="recuadro">
+                        <h2>Registros ({{ registros().length }})</h2>
+                        <div class="tabla-scroll">
+                            <table class="tabla-admin">
+                                <thead>
+                                    <tr>
+                                        @for (campo of definicion.campos; track campo.nombre) {
+                                            <th>{{ campo.etiqueta }}</th>
+                                        }
+                                        @if (!definicion.soloConsulta) {
+                                            <th>Acciones</th>
+                                        }
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (registro of registros(); track registro.id) {
+                                        <tr>
+                                            @for (campo of definicion.campos; track campo.nombre) {
+                                                <td [class.ajustar]="campo.tipo === 'detalle'">{{ textoDeCelda(campo, registro) }}</td>
+                                            }
+                                            @if (!definicion.soloConsulta) {
+                                                <td>
+                                                    <div class="acciones-fila">
+                                                        <button type="button" class="boton" (click)="editar(registro)">Editar</button>
+                                                        <button type="button" class="boton" (click)="eliminar(registro)">Eliminar</button>
+                                                    </div>
+                                                </td>
+                                            }
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                }
+            }
+
+        </main>
+
+    </div>
+</div>

@@ -1,0 +1,37 @@
+<section class="hero text-center">
+    <h1>GIMNASIO APOLO</h1>
+    <p class="eslogan">Entrena como un caballero, entrena como Apolo.</p>
+    <a class="btn btn-apolo" routerLink="/planes">VER PLANES</a>
+</section>
+
+<section class="seccion marca">
+    <div class="row align-items-center g-4 g-md-5">
+        <div class="col-12 col-md-7">
+            <h2>APOLO</h2>
+            <p>Nuestro nombre viene del dios del sol, la fuerza y la disciplina. Ese es el espíritu que buscamos en
+                cada persona que entrena con nosotros, sin importar el nivel con el que empiece.</p>
+        </div>
+        <div class="col-12 col-md-5 text-center">
+            <img class="img-fluid marca-logo" src="img/logo_apolo.jpeg" alt="Logo de Gimnasio Apolo">
+        </div>
+    </div>
+</section>
+
+<section class="seccion">
+    <h2>NOSOTROS</h2>
+    <div class="bloque nosotros">
+        <p class="mb-0">Gimnasio Apolo fue fundado en 2022 y tiene su sede en Vista Alegre, Tarma, Junin. Contamos
+            con 6 entrenadores certificados y 1 nutricionista que acompañan tu progreso desde el primer día.</p>
+    </div>
+</section>
+
+<section class="seccion">
+    <h2>SERVICIOS</h2>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 g-md-5">
+        @for (servicio of servicios; track servicio.titulo) {
+            <div class="col">
+                <app-tarjeta [tarjeta]="servicio" />
+            </div>
+        }
+    </div>
+</section>
