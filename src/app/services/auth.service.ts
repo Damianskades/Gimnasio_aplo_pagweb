@@ -21,9 +21,25 @@ const mensajesDeError: Record<string, string> = {
     "auth/operation-not-allowed": "El inicio de sesión con correo no está habilitado en Firebase."
 };
 
+export class ErrorDeAcceso extends Error { }
+
 export function mensajeDeError(fallo: unknown): string {
+    if (fallo instanceof ErrorDeAcceso) {
+        return fallo.message;
+    }
+
     const codigo = (fallo as { code?: string })?.code ?? "";
     return mensajesDeError[codigo] ?? "Ocurrió un error inesperado. Intenta de nuevo.";
+}
+
+async function tieneRolAdmin(uid: string): Promise<boolean> {
+    try {
+        const { leerRol } = await import("./usuario.service");
+        return await leerRol(uid) === "admin";
+    } catch (fallo) {
+        console.error(fallo);
+        return false;
+    }
 }
 
 @Injectable({ providedIn: "root" })
@@ -32,6 +48,10 @@ export class AuthService {
     readonly usuario = signal<User | null>(null);
 
     readonly listo = signal(false);
+
+    readonly esAdmin = signal(false);
+
+    private rolResuelto: Promise<void> = Promise.resolve();
 
     readonly conectado = computed(() => this.usuario() !== null);
 
@@ -47,14 +67,26 @@ export class AuthService {
 
     constructor() {
         onAuthStateChanged(auth, usuario => {
-            this.usuario.set(usuario);
-            this.listo.set(true);
+            this.rolResuelto = this.resolverRol(usuario);
         });
     }
 
     async ingresar(correo: string, contrasena: string) {
         const credencial = await signInWithEmailAndPassword(auth, correo, contrasena);
         await this.guardarUsuario(credencial.user, false);
+        await this.rolResuelto;
+    }
+
+    async ingresarAdmin(correo: string, contrasena: string) {
+        const credencial = await signInWithEmailAndPassword(auth, correo, contrasena);
+
+        if (!await tieneRolAdmin(credencial.user.uid)) {
+            await signOut(auth);
+            throw new ErrorDeAcceso("Esta cuenta no tiene permisos de administrador.");
+        }
+
+        await this.guardarUsuario(credencial.user, false);
+        await this.rolResuelto;
     }
 
     async registrar(nombre: string, correo: string, contrasena: string) {
@@ -69,6 +101,18 @@ export class AuthService {
 
     async salir() {
         await signOut(auth);
+    }
+
+    private async resolverRol(usuario: User | null) {
+        const esAdmin = usuario ? await tieneRolAdmin(usuario.uid) : false;
+
+        if (auth.currentUser?.uid !== usuario?.uid) {
+            return;
+        }
+
+        this.esAdmin.set(esAdmin);
+        this.usuario.set(usuario);
+        this.listo.set(true);
     }
 
     private async guardarUsuario(usuario: User, nuevo: boolean) {

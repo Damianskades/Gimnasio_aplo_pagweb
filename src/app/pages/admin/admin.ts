@@ -10,7 +10,7 @@ import { UsuarioService } from "../../services/usuario.service";
 import { DIAS_SEMANA, ESTADOS_PEDIDO } from "../../utils/constantes";
 import { PRODUCTOS_EJEMPLO, PLANES_EJEMPLO, HORARIOS_EJEMPLO } from "../../utils/datos-ejemplo";
 
-type TipoCampo = "texto" | "numero" | "enlace" | "hora" | "lista" | "casilla" | "casillas" | "opciones" | "detalle" | "fecha";
+type TipoCampo = "texto" | "numero" | "enlace" | "hora" | "lista" | "casilla" | "casillas" | "opciones" | "detalle" | "fecha" | "rol";
 type Clave = "productos" | "planes" | "horarios" | "pedidos" | "usuarios";
 type Registro = Record<string, unknown> & { id?: string };
 type Valor = string | boolean | string[];
@@ -35,6 +35,8 @@ interface Coleccion {
     campos: Campo[];
     soloEdicion?: boolean;
     soloConsulta?: boolean;
+    soloEliminar?: boolean;
+    confirmacion?: string;
     campoOrden?: string;
     descendente?: boolean;
 }
@@ -126,12 +128,14 @@ export class Admin implements OnInit {
             tituloEditar: "Usuario",
             service: inject(UsuarioService) as unknown as ServicioCrud<Registro>,
             ejemplos: [],
-            soloConsulta: true,
+            soloEliminar: true,
+            confirmacion: "¿Eliminar este usuario? Se borrará su registro del sistema. Su cuenta de acceso solo se puede borrar desde la consola de Firebase (Authentication). Sus pedidos anteriores se conservan.",
             campoOrden: "fechaRegistro",
             descendente: true,
             campos: [
                 { nombre: "nombre", etiqueta: "Nombre", tipo: "texto", soloLectura: true },
                 { nombre: "correo", etiqueta: "Correo", tipo: "texto", soloLectura: true },
+                { nombre: "rol", etiqueta: "Rol", tipo: "rol", soloLectura: true },
                 { nombre: "fechaRegistro", etiqueta: "Fecha de registro", tipo: "fecha", soloLectura: true },
                 { nombre: "ultimoIngreso", etiqueta: "Último ingreso", tipo: "fecha", soloLectura: true }
             ]
@@ -162,7 +166,7 @@ export class Admin implements OnInit {
     protected mostrarFormulario(): boolean {
         const definicion = this.definicion;
 
-        if (definicion.soloConsulta) {
+        if (definicion.soloConsulta || definicion.soloEliminar) {
             return false;
         }
 
@@ -375,7 +379,9 @@ export class Admin implements OnInit {
     }
 
     protected async eliminar(registro: Registro) {
-        const confirmado = window.confirm("¿Seguro que quieres eliminar este registro? Esta acción no se puede deshacer.");
+        const confirmado = window.confirm(
+            this.definicion.confirmacion ?? "¿Seguro que quieres eliminar este registro? Esta acción no se puede deshacer."
+        );
 
         if (!confirmado || !registro.id) {
             return;
@@ -425,6 +431,10 @@ export class Admin implements OnInit {
 
         if (campo.tipo === "opciones") {
             return valor ? this.textoOpcion(String(valor)) : "-";
+        }
+
+        if (campo.tipo === "rol") {
+            return valor === "admin" ? "Administrador" : "Cliente";
         }
 
         if (campo.tipo === "fecha") {

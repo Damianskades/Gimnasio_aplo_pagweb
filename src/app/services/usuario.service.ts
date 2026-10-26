@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
 import { User } from "firebase/auth";
 
 import { Datos, FirestoreCrud } from "./firestore-crud";
@@ -19,6 +19,11 @@ export async function registrarUsuario(usuario: User, nuevo: boolean) {
     }
 
     await setDoc(doc(db, COLECCION_USUARIOS, usuario.uid), datos, { merge: true });
+}
+
+export async function leerRol(uid: string): Promise<string> {
+    const documento = await getDoc(doc(db, COLECCION_USUARIOS, uid));
+    return documento.exists() ? String(documento.data()["rol"] ?? "") : "";
 }
 
 @Injectable({ providedIn: "root" })

@@ -3,14 +3,20 @@
 
         <div class="bloque cuadro">
 
-            <div class="pestanas">
-                <button type="button" [class.activa]="modo() === 'ingresar'" (click)="cambiarModo('ingresar')">
-                    INICIAR SESIÓN
-                </button>
-                <button type="button" [class.activa]="modo() === 'registrar'" (click)="cambiarModo('registrar')">
-                    REGISTRARSE
-                </button>
-            </div>
+            @if (modo() === "admin") {
+                <div class="pestanas">
+                    <button type="button" class="activa">ACCESO ADMINISTRADOR</button>
+                </div>
+            } @else {
+                <div class="pestanas">
+                    <button type="button" [class.activa]="modo() === 'ingresar'" (click)="cambiarModo('ingresar')">
+                        INICIAR SESIÓN
+                    </button>
+                    <button type="button" [class.activa]="modo() === 'registrar'" (click)="cambiarModo('registrar')">
+                        REGISTRARSE
+                    </button>
+                </div>
+            }
 
             <form [formGroup]="formulario" (ngSubmit)="enviar()" novalidate>
 
@@ -43,10 +49,20 @@
                 }
 
                 <button class="btn btn-apolo w-100 mt-2" type="submit" [disabled]="enviando()">
-                    {{ modo() === "registrar" ? "REGISTRARSE" : "INICIAR SESIÓN" }}
+                    @switch (modo()) {
+                        @case ("registrar") { REGISTRARSE }
+                        @case ("admin") { INGRESAR }
+                        @default { INICIAR SESIÓN }
+                    }
                 </button>
 
             </form>
+
+            @if (modo() === "admin") {
+                <button type="button" class="enlace mt-4" (click)="cambiarModo('ingresar')">Volver al inicio de sesión</button>
+            } @else {
+                <button type="button" class="enlace mt-4" (click)="cambiarModo('admin')">Acceso administrador</button>
+            }
 
         </div>
 

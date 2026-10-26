@@ -132,8 +132,12 @@
                                             @if (!definicion.soloConsulta) {
                                                 <td>
                                                     <div class="acciones-fila">
-                                                        <button type="button" class="boton" (click)="editar(registro)">Editar</button>
-                                                        <button type="button" class="boton" (click)="eliminar(registro)">Eliminar</button>
+                                                        @if (!definicion.soloEliminar) {
+                                                            <button type="button" class="boton" (click)="editar(registro)">Editar</button>
+                                                        }
+                                                        @if (registro["rol"] !== "admin") {
+                                                            <button type="button" class="boton" (click)="eliminar(registro)">Eliminar</button>
+                                                        }
                                                     </div>
                                                 </td>
                                             }

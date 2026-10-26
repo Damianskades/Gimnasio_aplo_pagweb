@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { collection, doc, runTransaction, serverTimestamp } from "firebase/firestore";
+import { collection, doc, getDocs, query, runTransaction, serverTimestamp, where } from "firebase/firestore";
 import { User } from "firebase/auth";
 
 import { Datos, FirestoreCrud } from "./firestore-crud";
@@ -20,6 +20,15 @@ export class PedidoService extends FirestoreCrud<Pedido> {
         return {
             estado: ESTADOS_PEDIDO.includes(estado) ? estado : ESTADOS_PEDIDO[0]
         };
+    }
+
+    async listarDeUsuario(usuarioId: string): Promise<Pedido[]> {
+        const consulta = query(collection(db, COLECCION_PEDIDOS), where("usuarioId", "==", usuarioId));
+        const resultado = await getDocs(consulta);
+
+        return resultado.docs
+            .map(documento => ({ id: documento.id, ...documento.data() }) as Pedido)
+            .sort((uno, otro) => (otro.fecha?.toMillis() ?? 0) - (uno.fecha?.toMillis() ?? 0));
     }
 
     async registrar(usuario: User, items: ItemCarrito[]): Promise<string> {

@@ -9,10 +9,12 @@
 
         <div class="bloque mensaje">
             <h2>PEDIDO REGISTRADO</h2>
-            <p>Tu código de pedido es <strong>{{ pedido.codigo }}</strong>.</p>
             <p>Total: <span class="precio">{{ pedido.total | moneda }}</span></p>
-            <p>Acércate a la tienda del gimnasio con este código para pagar y recoger tu pedido.</p>
-            <a class="btn btn-apolo mt-3" routerLink="/productos">SEGUIR COMPRANDO</a>
+            <p>Acércate a la tienda del gimnasio para pagar y recoger tu pedido.</p>
+            <div class="d-flex flex-wrap gap-3 mt-3">
+                <a class="btn btn-apolo" routerLink="/productos">SEGUIR COMPRANDO</a>
+                <a class="btn btn-apolo-contorno" routerLink="/mis-pedidos">VER MIS PEDIDOS</a>
+            </div>
         </div>
 
     } @else if (carrito.items().length === 0) {

@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 
 import { AuthService, mensajeDeError } from "../../services/auth.service";
 
-type Modo = "ingresar" | "registrar";
+type Modo = "ingresar" | "registrar" | "admin";
 
 @Component({
     selector: "app-login",
@@ -19,7 +19,9 @@ export class Login {
     private readonly router = inject(Router);
     private readonly ruta = inject(ActivatedRoute);
 
-    protected readonly modo = signal<Modo>("ingresar");
+    protected readonly modo = signal<Modo>(
+        this.ruta.snapshot.queryParamMap.get("modo") === "admin" ? "admin" : "ingresar"
+    );
     protected readonly enviando = signal(false);
     protected readonly error = signal("");
 
@@ -60,6 +62,8 @@ export class Login {
         try {
             if (this.modo() === "registrar") {
                 await this.auth.registrar(nombre.trim(), correo, contrasena);
+            } else if (this.modo() === "admin") {
+                await this.auth.ingresarAdmin(correo, contrasena);
             } else {
                 await this.auth.ingresar(correo, contrasena);
             }

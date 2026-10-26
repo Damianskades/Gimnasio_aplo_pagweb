@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore";
+
 export interface Producto {
     id?: string;
     nombre: string;
@@ -42,12 +44,14 @@ export interface Pedido {
     items: { productoId: string; nombre: string; precio: number; cantidad: number }[];
     total: number;
     estado: "pendiente" | "entregado" | "cancelado";
+    fecha?: Timestamp;
 }
 
 export interface Usuario {
     id?: string;
     nombre: string;
     correo: string;
+    rol?: string;
 }
 
 export interface TarjetaInfo {

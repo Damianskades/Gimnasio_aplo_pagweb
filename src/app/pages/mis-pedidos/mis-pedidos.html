@@ -1,0 +1,43 @@
+<section class="titulo">
+    <h1>MIS PEDIDOS</h1>
+    <p class="intro">Revisa los pedidos que hiciste en nuestra tienda.</p>
+</section>
+
+<section class="seccion pt-4">
+    @switch (estado()) {
+        @case ("cargando") {
+            <app-cargando mensaje="Cargando tus pedidos..." />
+        }
+        @case ("error") {
+            <p class="aviso">No pudimos cargar tus pedidos. Revisa tu conexión a internet e intenta de nuevo.</p>
+        }
+        @default {
+            @if (pedidos().length === 0) {
+                <p class="aviso">Todavía no has hecho pedidos.</p>
+                <a class="btn btn-apolo mt-4" routerLink="/productos">VER PRODUCTOS</a>
+            } @else {
+                <div class="d-flex flex-column gap-4">
+                    @for (pedido of pedidos(); track pedido.id) {
+                        <article class="card tarjeta item">
+                            <div class="fila">
+                                <span>{{ fecha(pedido) }}</span>
+                                <span>{{ textoEstado(pedido) }}</span>
+                            </div>
+
+                            <ul class="productos">
+                                @for (producto of pedido.items; track $index) {
+                                    <li>{{ producto.cantidad }} x {{ producto.nombre }}</li>
+                                }
+                            </ul>
+
+                            <div class="fila total">
+                                <span>TOTAL</span>
+                                <span class="precio">{{ pedido.total | moneda }}</span>
+                            </div>
+                        </article>
+                    }
+                </div>
+            }
+        }
+    }
+</section>

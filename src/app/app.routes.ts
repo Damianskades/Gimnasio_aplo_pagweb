@@ -1,10 +1,12 @@
 import { Routes } from "@angular/router";
 import { SitioLayout } from "./layout/sitio-layout";
+import { adminGuard, sesionGuard } from "./core/guards";
 
 export const routes: Routes = [
     {
         path: "admin",
         title: "Panel de administración - Gimnasio Apolo",
+        canActivate: [adminGuard],
         loadComponent: () => import("./pages/admin/admin").then(m => m.Admin)
     },
     {
@@ -45,6 +47,12 @@ export const routes: Routes = [
                 path: "carrito",
                 title: "Carrito - Gimnasio Apolo",
                 loadComponent: () => import("./pages/carrito/carrito").then(m => m.Carrito)
+            },
+            {
+                path: "mis-pedidos",
+                title: "Mis pedidos - Gimnasio Apolo",
+                canActivate: [sesionGuard],
+                loadComponent: () => import("./pages/mis-pedidos/mis-pedidos").then(m => m.MisPedidos)
             }
         ]
     },

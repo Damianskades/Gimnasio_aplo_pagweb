@@ -1,0 +1,35 @@
+.item {
+    max-width: 700px;
+    padding: 20px;
+}
+
+.fila {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 3px solid var(--negro);
+    color: var(--gris);
+    font-size: 17px;
+}
+
+.fila.total {
+    border-bottom: none;
+    color: var(--hueso);
+    font-family: var(--fuente-destacada);
+    font-size: 22px;
+    letter-spacing: 2px;
+}
+
+.fila.total .precio {
+    font-size: 34px;
+    letter-spacing: 0;
+}
+
+.productos {
+    margin: 0;
+    padding: 12px 0 12px 20px;
+    border-bottom: 3px solid var(--negro);
+    color: var(--hueso);
+    font-size: 17px;
+}

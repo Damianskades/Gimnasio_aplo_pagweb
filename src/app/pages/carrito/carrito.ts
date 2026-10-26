@@ -8,7 +8,6 @@ import { ErrorDePedido, PedidoService } from "../../services/pedido.service";
 import { MonedaPipe } from "../../utils/moneda.pipe";
 
 interface PedidoConfirmado {
-    codigo: string;
     total: number;
     unidades: number;
 }
@@ -52,10 +51,9 @@ export class Carrito {
         const items = this.carrito.items();
 
         try {
-            const id = await this.pedidoService.registrar(usuario, items);
+            await this.pedidoService.registrar(usuario, items);
 
             this.confirmado.set({
-                codigo: id.slice(0, 8).toUpperCase(),
                 total: this.carrito.total(),
                 unidades: this.carrito.cantidadTotal()
             });
